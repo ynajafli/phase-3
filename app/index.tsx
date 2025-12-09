@@ -1,4 +1,6 @@
 import { userSignIn } from "@/firebaase/authHelpers";
+import { auth } from "@/firebaase/config";
+import { sendPasswordResetEmail } from "firebase/auth";
 import { useRouter } from "expo-router";
 import { Formik } from "formik";
 import { useState } from "react";
@@ -14,20 +16,22 @@ import * as Yup from "yup";
 export default function SignIn() {
   const router = useRouter();
   const [submitMessage, setSubmitMessage] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string | null>(null);
+  const [resetMessage, setResetMessage] = useState<string | null>(null);
 
   function getFriendlyErrorMessage(error: string) {
-  if (!error) return "";
+    if (!error) return "";
 
-  if (error.includes("auth/invalid-email")) return "Invalid email format.";
-  if (error.includes("auth/user-not-found")) return "Account does not exist.";
-  if (error.includes("auth/wrong-password")) return "Incorrect password.";
-  if (error.includes("auth/invalid-credential")) return "Incorrect email or password.";
-  if (error.includes("auth/too-many-requests")) return "Too many attempts. Try again later.";
+    if (error.includes("auth/invalid-email")) return "Invalid email format.";
+    if (error.includes("auth/user-not-found")) return "Account does not exist.";
+    if (error.includes("auth/wrong-password")) return "Incorrect password.";
+    if (error.includes("auth/invalid-credential"))
+      return "Incorrect email or password.";
+    if (error.includes("auth/too-many-requests"))
+      return "Too many attempts. Try again later.";
 
-  return "Something went wrong. Please try again.";
-}
-
+    return "Something went wrong. Please try again.";
+  }
 
   // Validation Schema
   const validationSchema = Yup.object().shape({
@@ -41,6 +45,9 @@ export default function SignIn() {
 
   // Submit Logic
   async function submitForm(values: { email: string; password: string }) {
+    setError(null);
+    setResetMessage(null);
+
     const { error } = await userSignIn(values.email, values.password);
 
     if (error) {
@@ -106,21 +113,61 @@ export default function SignIn() {
             <View style={styles.buttonContainer}>
               {/* Sign In Button */}
               <TouchableOpacity
-                style={[styles.button, {backgroundColor: "#3F72AF"}]}
+                style={[styles.button, { backgroundColor: "#3F72AF" }]}
                 onPress={() => handleSubmit()}
               >
-                <Text style={[styles.buttonText, {color: "white"}]}>Sign In</Text>
+                <Text style={[styles.buttonText, { color: "white" }]}>
+                  Sign In
+                </Text>
               </TouchableOpacity>
 
               {/* Sign Up Button */}
               <TouchableOpacity
-                style={[styles.button, {backgroundColor: "#DBE2EF"}]}
+                style={[styles.button, { backgroundColor: "#DBE2EF" }]}
                 onPress={() => router.push("./sign-up")}
               >
-                <Text style={[styles.buttonText, {color: "#112D4E"}]}>Sign Up</Text>
+                <Text style={[styles.buttonText, { color: "#112D4E" }]}>
+                  Sign Up
+                </Text>
               </TouchableOpacity>
             </View>
-            <Text>Forgot password?</Text>
+
+            {/* Forgot password */}
+            <TouchableOpacity
+              onPress={async () => {
+                setError(null);
+                setResetMessage(null);
+
+                if (!values.email) {
+                  setError("Please enter your email to reset your password.");
+                  return;
+                }
+
+                try {
+                  await sendPasswordResetEmail(auth, values.email);
+                  setResetMessage(
+                    "Password reset email sent. Please check your inbox."
+                  );
+                } catch (e: any) {
+                  const msg =
+                    e?.code ||
+                    e?.message ||
+                    "Failed to send password reset email.";
+                  setError(msg);
+                }
+              }}
+            >
+              <Text style={{ marginTop: 10}}>
+                Forgot password?
+              </Text>
+            </TouchableOpacity>
+
+            {/* Reset success message */}
+            {resetMessage && (
+              <Text style={[styles.submitText, { color: "green" }]}>
+                {resetMessage}
+              </Text>
+            )}
 
             {submitMessage ? (
               <Text style={styles.submitText}>Signed in successfully</Text>
@@ -138,28 +185,23 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
   },
-  
   buttonContainer: {
     flexDirection: "row",
     width: "100%",
     justifyContent: "center",
     gap: 10,
-    marginTop: 20
+    marginTop: 20,
   },
-
   title: {
     fontSize: 40,
     fontWeight: "bold",
     marginTop: 60,
   },
-
   subTitle: {
     fontSize: 20,
     fontWeight: "600",
     marginBottom: 30,
   },
-
-
   inputFields: {
     borderWidth: 1,
     padding: 10,
@@ -168,7 +210,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     width: "70%",
     marginVertical: 10,
-    borderColor: "#DBE2EF"
+    borderColor: "#DBE2EF",
   },
   errorText: {
     color: "red",
