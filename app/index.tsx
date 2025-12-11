@@ -33,7 +33,6 @@ export default function SignIn() {
     return "Something went wrong. Please try again.";
   }
 
-  // Validation Schema
   const validationSchema = Yup.object().shape({
     email: Yup.string()
       .email("Invalid email format")
@@ -43,7 +42,6 @@ export default function SignIn() {
       .required("Password cannot be empty"),
   });
 
-  // Submit Logic
   async function submitForm(values: { email: string; password: string }) {
     setError(null);
     setResetMessage(null);
@@ -101,7 +99,7 @@ export default function SignIn() {
             />
 
             {error && (
-              <Text style={{ color: "red", marginTop: 5 }}>
+              <Text style={styles.errorTextSmall}>
                 {getFriendlyErrorMessage(error)}
               </Text>
             )}
@@ -113,20 +111,18 @@ export default function SignIn() {
             <View style={styles.buttonContainer}>
               {/* Sign In Button */}
               <TouchableOpacity
-                style={[styles.button, { backgroundColor: "#3F72AF" }]}
+                style={[styles.button, { backgroundColor: "#8C1C13" }]}
                 onPress={() => handleSubmit()}
               >
-                <Text style={[styles.buttonText, { color: "white" }]}>
-                  Sign In
-                </Text>
+                <Text style={styles.buttonText}>Sign In</Text>
               </TouchableOpacity>
 
               {/* Sign Up Button */}
               <TouchableOpacity
-                style={[styles.button, { backgroundColor: "#DBE2EF" }]}
+                style={[styles.button, { backgroundColor: "#5C4033" }]}
                 onPress={() => router.push("./sign-up")}
               >
-                <Text style={[styles.buttonText, { color: "#112D4E" }]}>
+                <Text style={[styles.buttonText, { color: "#FFFFFF" }]}>
                   Sign Up
                 </Text>
               </TouchableOpacity>
@@ -157,20 +153,20 @@ export default function SignIn() {
                 }
               }}
             >
-              <Text style={{ marginTop: 10}}>
+              <Text style={styles.bodySmall}>
                 Forgot password?
               </Text>
             </TouchableOpacity>
 
             {/* Reset success message */}
             {resetMessage && (
-              <Text style={[styles.submitText, { color: "green" }]}>
+              <Text style={styles.successText}>
                 {resetMessage}
               </Text>
             )}
 
             {submitMessage ? (
-              <Text style={styles.submitText}>Signed in successfully</Text>
+              <Text style={styles.successText}>Signed in successfully</Text>
             ) : null}
           </>
         )}
@@ -185,6 +181,60 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: "100%",
   },
+
+  // H1
+  title: {
+    fontSize: 32,
+    fontFamily: "Playfair Display",
+    fontWeight: "700",
+    lineHeight: 40,
+    marginTop: 60,
+  },
+
+  // H2
+  subTitle: {
+    fontSize: 24,
+    fontFamily: "Playfair Display",
+    fontWeight: "700",
+    lineHeight: 32,
+    marginBottom: 30,
+  },
+
+  // Body Large (Inputs)
+  inputFields: {
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 8,
+    color: "black",
+    fontSize: 18,
+    fontFamily: "Montserrat",
+    fontWeight: "400",
+    lineHeight: 26,
+    width: "70%",
+    marginVertical: 10,
+    borderColor: "#9E9E9E",
+  },
+
+  // Caption (errors)
+  errorText: {
+    color: "#C62828",
+    fontSize: 12,
+    fontFamily: "Montserrat",
+    fontWeight: "400",
+    lineHeight: 16,
+    width: "70%",
+    textAlign: "left",
+  },
+
+  errorTextSmall: {
+    color: "#C62828",
+    fontSize: 12,
+    fontFamily: "Montserrat",
+    lineHeight: 16,
+    marginTop: 5,
+  },
+
+  // Layout for buttons
   buttonContainer: {
     flexDirection: "row",
     width: "100%",
@@ -192,63 +242,42 @@ const styles = StyleSheet.create({
     gap: 10,
     marginTop: 20,
   },
-  title: {
-    fontSize: 40,
-    fontWeight: "bold",
-    marginTop: 60,
-  },
-  subTitle: {
-    fontSize: 20,
-    fontWeight: "600",
-    marginBottom: 30,
-  },
-  inputFields: {
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 8,
-    color: "black",
-    fontSize: 18,
-    width: "70%",
-    marginVertical: 10,
-    borderColor: "#DBE2EF",
-  },
-  errorText: {
-    color: "red",
-    fontSize: 13,
-    width: "70%",
-    textAlign: "left",
-  },
+
+  // Button style
   button: {
     marginVertical: 10,
     width: "20%",
     padding: 10,
     borderRadius: 12,
   },
+
+  // Button Text (Button Text → 16px Medium)
   buttonText: {
-    fontSize: 18,
+    fontSize: 16,
+    fontFamily: "Montserrat",
     fontWeight: "500",
+    lineHeight: 24,
     textAlign: "center",
+    color: "white",
   },
-  submitText: {
-    fontSize: 13,
-    color: "green",
+
+  // Success / small body
+  successText: {
+    fontSize: 12,
+    fontFamily: "Montserrat",
+    fontWeight: "400",
+    lineHeight: 16,
+    color: "#2E7D32",
     width: "70%",
     textAlign: "left",
   },
-  authenticationButtonsContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    width: "70%",
+
+  // "Forgot Password"
+  bodySmall: {
+    fontSize: 14,
+    fontFamily: "Montserrat",
+    fontWeight: "400",
+    lineHeight: 20,
     marginTop: 10,
-  },
-  authenticationButton: {
-    width: "48%",
-    padding: 10,
-    borderRadius: 8,
-    backgroundColor: "grey",
-  },
-  authenticationButtonText: {
-    fontWeight: "bold",
-    textAlign: "center",
   },
 });

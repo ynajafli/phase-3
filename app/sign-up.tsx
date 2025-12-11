@@ -17,7 +17,6 @@ export default function SignUp() {
   const [submitMessage, setSubmitMessage] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Validation Schema
   const validationSchema = Yup.object().shape({
     firstName: Yup.string().required("First name cannot be empty"),
     lastName: Yup.string().required("Last name cannot be empty"),
@@ -48,10 +47,8 @@ export default function SignUp() {
         return;
       }
 
-      // navigate first
       router.replace("/request-outfit");
 
-      // save profile in background
       saveUserProfile(user.uid, {
         firstName: values.firstName,
         lastName: values.lastName,
@@ -64,7 +61,6 @@ export default function SignUp() {
 
   return (
     <View style={styles.container}>
-      {/* Same header style as Sign-In */}
       <Text style={styles.title}>Aura</Text>
       <Text style={styles.subTitle}>Create your Aura Account</Text>
 
@@ -155,23 +151,21 @@ export default function SignUp() {
               <Text style={styles.errorText}>{errors.confirmPassword}</Text>
             ) : null}
 
-            {/* One primary Sign Up button */}
+            {/* Primary Sign Up button */}
             <View style={styles.buttonContainer}>
               <TouchableOpacity
-                style={[styles.button, { backgroundColor: "#3F72AF" }]}
+                style={[styles.button, { backgroundColor: "#8C1C13" }]}
                 onPress={() => handleSubmit()}
               >
-                <Text style={[styles.buttonText, { color: "white" }]}>
-                  Sign Up
-                </Text>
+                <Text style={styles.buttonText}>Sign Up</Text>
               </TouchableOpacity>
             </View>
 
-            {/* “Have an account? Log in” text under the button */}
+            {/* “Have an account? Log in” */}
             <Text style={{ marginTop: 10 }}>
               Have an account?{" "}
               <Text
-                style={{ color: "#3F72AF", fontWeight: "600" }}
+                style={{ color: "#8C1C13", fontWeight: "600" }}
                 onPress={() => router.push("/")}
               >
                 Log in
@@ -205,48 +199,73 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 
+  // H1
   title: {
-    fontSize: 40,
-    fontWeight: "bold",
+    fontSize: 32,
+    fontFamily: "Playfair Display",
+    fontWeight: "700",
+    lineHeight: 40,
     marginTop: 60,
   },
 
+  // H2
   subTitle: {
-    fontSize: 20,
-    fontWeight: "600",
+    fontSize: 24,
+    fontFamily: "Playfair Display",
+    fontWeight: "700",
+    lineHeight: 32,
     marginBottom: 30,
   },
 
+  // Inputs → Body Large
   inputFields: {
     borderWidth: 1,
     padding: 10,
     borderRadius: 8,
     color: "black",
     fontSize: 18,
+    fontFamily: "Montserrat",
+    fontWeight: "400",
+    lineHeight: 26,
     width: "70%",
     marginVertical: 10,
-    borderColor: "#DBE2EF",
+    borderColor: "#9E9E9E",
   },
+
+  // Caption / errors
   errorText: {
-    color: "red",
-    fontSize: 13,
+    color: "#C62828",
+    fontSize: 12,
+    fontFamily: "Montserrat",
+    fontWeight: "400",
+    lineHeight: 16,
     width: "70%",
     textAlign: "left",
   },
+
   button: {
     marginVertical: 10,
     width: "20%",
     padding: 10,
     borderRadius: 12,
   },
+
+  // Button Text (16 / Medium)
   buttonText: {
-    fontSize: 18,
+    fontSize: 16,
+    fontFamily: "Montserrat",
     fontWeight: "500",
+    lineHeight: 24,
     textAlign: "center",
+    color: "#FFFFFF",
   },
+
   submitText: {
-    fontSize: 13,
-    color: "green",
+    fontSize: 12,
+    fontFamily: "Montserrat",
+    fontWeight: "400",
+    lineHeight: 16,
+    color: "#2E7D32",
     width: "70%",
     textAlign: "left",
   },

@@ -113,8 +113,6 @@ export default function OutfitGenerator() {
         }
     }
 
-
-    // helper to get 4 outfits starting from startIndex (wrap around)
     const getVisibleOutfits = () => {
         const result: Outfit[] = [];
         for (let i = 0; i < VISIBLE_COUNT; i++) {
@@ -131,7 +129,6 @@ export default function OutfitGenerator() {
     };
 
     const handleRefresh = () => {
-        // same behavior as generate more for now
         handleGenerateMore();
     };
 
@@ -248,12 +245,14 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between",
         borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: "#E0E4EC",
+        borderBottomColor: "#9E9E9E",
     },
     headerTitle: {
-        fontSize: 30,
+        fontSize: 32,
+        fontFamily: "Playfair Display",
         fontWeight: "700",
-        color: "#112D4E",
+        lineHeight: 40,
+        color: "#8C1C13",
     },
     refreshButton: {
         padding: 6,
@@ -261,16 +260,21 @@ const styles = StyleSheet.create({
     },
     refreshIcon: {
         fontSize: 18,
-        color: "#112D4E",
+        fontFamily: "Montserrat",
+        fontWeight: "400",
+        lineHeight: 24,
+        color: "#8C1C13",
     },
     section: {
         marginTop: 16,
         paddingHorizontal: 24,
     },
     sectionTitle: {
-        fontSize: 18,
+        fontSize: 24,
+        fontFamily: "Playfair Display",
         fontWeight: "700",
-        color: "#112D4E",
+        lineHeight: 32,
+        color: "#8C1C13",
         marginBottom: 12,
     },
     outfitScroll: {
@@ -297,21 +301,25 @@ const styles = StyleSheet.create({
     },
     outfitName: {
         fontSize: 16,
-        fontWeight: "600",
-        color: "#112D4E",
+        fontFamily: "Montserrat",
+        fontWeight: "500",
+        lineHeight: 24,
+        color: "#8C1C13",
     },
     generateButton: {
         marginTop: 20,
         alignSelf: "center",
-        backgroundColor: "#3F72AF",
+        backgroundColor: "#8C1C13",
         borderRadius: 20,
         paddingHorizontal: 28,
         paddingVertical: 12,
     },
     generateButtonText: {
-        color: "#FFFFFF",
         fontSize: 16,
-        fontWeight: "600",
+        fontFamily: "Montserrat",
+        fontWeight: "500",
+        lineHeight: 24,
+        color: "#FFFFFF",
     },
     modalOverlay: {
         flex: 1,
@@ -332,13 +340,18 @@ const styles = StyleSheet.create({
         marginBottom: 12,
     },
     modalTitle: {
-        fontSize: 18,
+        fontSize: 20,
+        fontFamily: "Playfair Display",
         fontWeight: "700",
-        color: "#112D4E",
+        lineHeight: 28,
+        color: "#8C1C13",
     },
     modalClose: {
         fontSize: 24,
-        color: "#112D4E",
+        fontFamily: "Montserrat",
+        fontWeight: "400",
+        lineHeight: 28,
+        color: "#8C1C13",
     },
     modalImage: {
         width: "80%",
@@ -349,39 +362,49 @@ const styles = StyleSheet.create({
     },
     modalLabel: {
         textAlign: "center",
+        fontSize: 14,
+        fontFamily: "Montserrat",
         fontWeight: "600",
+        lineHeight: 20,
         marginBottom: 4,
-        color: "#112D4E",
+        color: "#8C1C13",
     },
     explanationBox: {
         marginTop: 14,
         padding: 12,
         borderRadius: 12,
-        backgroundColor: "#FFF3D4",
+        backgroundColor: "#D4A574",
     },
     explanationTitle: {
+        fontSize: 20,
+        fontFamily: "Playfair Display",
         fontWeight: "700",
+        lineHeight: 28,
         marginBottom: 6,
-        color: "#112D4E",
-        textAlign: "center"
+        color: "#8C1C13",
+        textAlign: "center",
     },
     explanationText: {
-        fontSize: 13,
-        color: "#333",
-        lineHeight: 18,
+        fontSize: 14,
+        fontFamily: "Montserrat",
+        fontWeight: "400",
+        lineHeight: 20,
+        color: "#424242",
     },
     signOutButton: {
         marginTop: 30,
         marginBottom: 40,
         alignSelf: "center",
-        backgroundColor: "#F8D7DA",
+        backgroundColor: "#C62828",
         paddingVertical: 10,
         paddingHorizontal: 22,
         borderRadius: 12,
     },
     signOutText: {
-        color: "#721C24",
-        fontWeight: "600",
-        fontSize: 15,
+        fontSize: 16,
+        fontFamily: "Montserrat",
+        fontWeight: "500",
+        lineHeight: 24,
+        color: "#FFFFFF",
     },
 });
